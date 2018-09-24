@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>ZTImage.Libuv</id>
+    <version>2.1.12</version>
+    <authors>asmrobot</authors>
+    <owners>asmrobot</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>usage in .net framework and .net core.</description>
+    <releaseNotes>usage in .net framework and .net core.</releaseNotes>
+    <copyright>Copyright 2018</copyright>
+    <tags>ZTImage Libuv</tags>
+    <dependencies>
+       <group targetFramework=".NETFramework4.5" />
+       <group targetFramework=".NETStandard2.0" />
+    </dependencies>
+  </metadata>
+</package>

@@ -1,0 +1,116 @@
+<!--
+ *
+ * waxbill.targets
+ * reference from sqlite targets file
+ * WARNING: This MSBuild file requires MSBuild 4.0 features.
+ * Written by asmrobot.
+ *
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!--
+  ******************************************************************************
+  **                    libuv Interop Library Build Items                    **
+  ******************************************************************************
+  -->
+
+  <ItemGroup>
+    <WaxbillInteropFiles Condition="'$(MSBuildThisFileDirectory)' != '' And
+                                   HasTrailingSlash('$(MSBuildThisFileDirectory)')"
+                        Include="$(MSBuildThisFileDirectory)..\runtimes\**\libuv.*" />
+  </ItemGroup>
+
+  <!--
+  ******************************************************************************
+  **                   libuv Interop Library Content Items                   **
+  ******************************************************************************
+  -->
+
+  <ItemGroup Condition="'@(WaxbillInteropFiles)' != ''">
+    <Content Include="@(WaxbillInteropFiles)">
+      <Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+
+  <Target Name="CopyWaxbillInteropFiles"
+          Condition="'$(OutDir)' != '' And
+                     HasTrailingSlash('$(OutDir)') And
+                     Exists('$(OutDir)')"
+          Inputs="@(WaxbillInteropFiles)"
+          Outputs="@(WaxbillInteropFiles -> '$(OutDir)%(RecursiveDir)%(Filename)%(Extension)')">
+    <!--
+        NOTE: Copy "libuv.dll" and all related files, for every
+              architecture that we support, to the build output directory.
+    -->
+    <Copy SourceFiles="@(WaxbillInteropFiles)"
+          DestinationFiles="@(WaxbillInteropFiles -> '$(OutDir)%(RecursiveDir)%(Filename)%(Extension)')" />
+  </Target>
+
+  <!--
+  ******************************************************************************
+  -->
+
+  <Target Name="CleanWaxbillInteropFiles"
+          Condition="'$(OutDir)' != '' And
+                     HasTrailingSlash('$(OutDir)') And
+                     Exists('$(OutDir)')">
+    <!--
+        NOTE: Delete "libuv.dll" and all related files, for every
+              architecture that we support, from the build output directory.
+    -->
+    <Delete Files="@(WaxbillInteropFiles -> '$(OutDir)%(RecursiveDir)%(Filename)%(Extension)')" />
+  </Target>
+
+  <!--
+  ******************************************************************************
+  -->
+
+  <Target Name="CollectWaxbillInteropFiles">
+    <ItemGroup>
+      <FilesForPackagingFromProject Include="@(WaxbillInteropFiles)">
+        <DestinationRelativePath>bin\%(RecursiveDir)%(Filename)%(Extension)</DestinationRelativePath>
+      </FilesForPackagingFromProject>
+    </ItemGroup>
+  </Target>
+
+  <!--
+  ******************************************************************************
+  **                 libuv Interop Library Build Properties                  **
+  ******************************************************************************
+  -->
+
+  <PropertyGroup>
+    <PostBuildEventDependsOn>
+      $(PostBuildEventDependsOn);
+      CopyWaxbillInteropFiles;
+    </PostBuildEventDependsOn>
+    <BuildDependsOn>
+      $(BuildDependsOn);
+      CopyWaxbillInteropFiles;
+    </BuildDependsOn>
+    <CleanDependsOn>
+      $(CleanDependsOn);
+      CleanWaxbillInteropFiles;
+    </CleanDependsOn>
+  </PropertyGroup>
+
+  <!--
+  ******************************************************************************
+  **     libuv Interop Library Publish Properties for Visual Studio 201x     **
+  ******************************************************************************
+  -->
+
+  <PropertyGroup Condition="'$(VisualStudioVersion)' == '' Or
+                            '$(VisualStudioVersion)' == '10.0' Or
+                            '$(VisualStudioVersion)' == '11.0' Or
+                            '$(VisualStudioVersion)' == '12.0' Or
+                            '$(VisualStudioVersion)' == '14.0' Or
+                            '$(VisualStudioVersion)' == '15.0'">
+    <PipelineCollectFilesPhaseDependsOn>
+      CollectWaxbillInteropFiles;
+      $(PipelineCollectFilesPhaseDependsOn);
+    </PipelineCollectFilesPhaseDependsOn>
+  </PropertyGroup>
+</Project>
