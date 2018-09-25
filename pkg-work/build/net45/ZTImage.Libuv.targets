@@ -17,7 +17,7 @@
   <ItemGroup>
     <WaxbillInteropFiles Condition="'$(MSBuildThisFileDirectory)' != '' And
                                    HasTrailingSlash('$(MSBuildThisFileDirectory)')"
-                        Include="$(MSBuildThisFileDirectory)..\runtimes\**\libuv.*" />
+                        Include="$(MSBuildThisFileDirectory)..\..\runtimes\**\libuv.*" />
   </ItemGroup>
 
   <!--

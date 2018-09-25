@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ZTImage.Utils
 {
-    public class Validate
+    internal class Validate
     {
         /// <summary>
         /// Null抛出异常

@@ -38,70 +38,74 @@ namespace ZTImage.Libuv
             {
                 if (IntPtr.Size == 4)
                 {
-                    filename = Path.Combine(dir, "win-x86", "libuv.dll");
+                    filename = Path.Combine(dir, "win-x86", "native", "libuv.dll");
                 }
                 else
                 {
-                    filename = Path.Combine(dir, "win-x64", "libuv.dll");
+                    filename = Path.Combine(dir, "win-x64", "native", "libuv.dll");
                 }
             }
             else if (System.Environment.OSVersion.Platform == PlatformID.Unix)
             {
-                filename = Path.Combine(dir, "linux-x64", "libuv.so");
+                filename = Path.Combine(dir, "linux-x64", "native", "libuv.so");
             }
             else
             {
-                filename = Path.Combine(dir, "osx", "libuv.dylib");
+                filename = Path.Combine(dir, "osx", "native", "libuv.dylib");
             }
-#else
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                if (RuntimeInformation.OSArchitecture == Architecture.X86)
-                {
-                    filename = Path.Combine(dir, "win-x86", "libuv.dll");
-                }
-                else if (RuntimeInformation.OSArchitecture == Architecture.X64)
-                {
-                    filename = Path.Combine(dir, "win-x64", "libuv.dll");
-                }
-                else if (RuntimeInformation.OSArchitecture == Architecture.Arm || RuntimeInformation.OSArchitecture == Architecture.Arm64)
-                {
-                    filename = Path.Combine(dir, "win-arm", "libuv.dll");
-                }
-            }
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
-                if (RuntimeInformation.OSArchitecture == Architecture.Arm)
-                {
-                    filename = Path.Combine(dir, "linux-arm", "libuv.so");
-                }
-                else if (RuntimeInformation.OSArchitecture == Architecture.Arm64)
-                {
-                    filename = Path.Combine(dir, "linux-arm64", "libuv.so");
-                }
-                else if (RuntimeInformation.OSArchitecture == Architecture.X64)
-                {
-                    filename = Path.Combine(dir, "linux-x64", "libuv.so");
-                }
-            }
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-            {
-                filename = Path.Combine(dir, "osx", "libuv.dylib");
-            }
-            else
-            {
-                throw new Exception("unknow operation");
-            }
-            if (string.IsNullOrEmpty(filename))
-            {
-                throw new Exception("unknow process arch");
-            }
-#endif
 
             NativeLibraryHelper.LoadLibrary(filename);
+#endif
+            //#else
+            //            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            //            {
+            //                if (RuntimeInformation.OSArchitecture == Architecture.X86)
+            //                {
+            //                    filename = Path.Combine(dir, "win-x86", "native", "libuv.dll");
+            //                }
+            //                else if (RuntimeInformation.OSArchitecture == Architecture.X64)
+            //                {
+            //                    filename = Path.Combine(dir, "win-x64",  "native","libuv.dll");
+            //                }
+            //                else if (RuntimeInformation.OSArchitecture == Architecture.Arm || RuntimeInformation.OSArchitecture == Architecture.Arm64)
+            //                {
+            //                    filename = Path.Combine(dir, "win-arm", "native", "libuv.dll");
+            //                }
+            //            }
+            //            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            //            {
+            //                if (RuntimeInformation.OSArchitecture == Architecture.Arm)
+            //                {
+            //                    filename = Path.Combine(dir, "linux-arm", "native", "libuv.so");
+            //                }
+            //                else if (RuntimeInformation.OSArchitecture == Architecture.Arm64)
+            //                {
+            //                    filename = Path.Combine(dir, "linux-arm64",  "native","libuv.so");
+            //                }
+            //                else if (RuntimeInformation.OSArchitecture == Architecture.X64)
+            //                {
+            //                    filename = Path.Combine(dir, "linux-x64",  "native","libuv.so");
+            //                }
+            //            }
+            //            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            //            {
+            //                filename = Path.Combine(dir, "osx",  "native","libuv.dylib");
+            //            }
+            //            else
+            //            {
+            //                throw new Exception("unknow operation");
+            //            }
+            //            if (string.IsNullOrEmpty(filename))
+            //            {
+            //                throw new Exception("unknow process arch");
+            //            }
+            //            NativeLibraryHelper.LoadLibrary(filename);
+            //#endif
+
+
         }
 
-#region tools
+        #region tools
         public static void ThrowIfErrored(int statusCode)
         {
             // Note: method is explicitly small so the success case is easily inlined
