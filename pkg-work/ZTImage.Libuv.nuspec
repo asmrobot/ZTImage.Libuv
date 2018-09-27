@@ -2,12 +2,12 @@
 <package >
   <metadata>
     <id>ZTImage.Libuv</id>
-    <version>2.1.13</version>
+    <version>2.1.14</version>
     <authors>asmrobot</authors>
     <owners>asmrobot</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>usage in .net framework and .net core.</description>
-    <releaseNotes>usage in .net framework and .net core.</releaseNotes>
+    <releaseNotes>usage in .net framework and .net core. add IncludeRuntimeFolder propery to remove libs file from project when value is false</releaseNotes>
     <copyright>Copyright 2018</copyright>
     <tags>ZTImage Libuv</tags>
     <dependencies>
