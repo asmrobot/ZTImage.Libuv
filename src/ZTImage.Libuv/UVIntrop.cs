@@ -166,8 +166,8 @@ namespace ZTImage.Libuv
             // names in this type don't have meaningful symbolic names. instead, they are
             // assigned in the correct order by the constructor at runtime
 
-            internal readonly IntPtr _field0;
-            internal readonly IntPtr _field1;
+            public readonly IntPtr _field0;
+            public readonly IntPtr _field1;
 
             public uv_buf_t(IntPtr memory, int len, bool IsWindows)
             {
@@ -182,36 +182,9 @@ namespace ZTImage.Libuv
                     _field1 = (IntPtr)len;
                 }
             }
-
-            public PlatformBuf ToPlatformBuf()
-            {
-                if (IsWindows)
-                {
-                    return new PlatformBuf(_field1, _field0);
-                }
-                else
-                {
-                    return new PlatformBuf(_field0, _field1);
-                }
-            }
+            
         }
 
-        public struct PlatformBuf
-        {
-            public readonly IntPtr Buffer;
-            public readonly IntPtr Count;
-
-            public PlatformBuf(IntPtr buffer,IntPtr count)
-            {
-                this.Buffer = buffer;
-                this.Count = count;
-            }
-
-            public uv_buf_t ToUVBufT()
-            {
-                return new uv_buf_t(this.Buffer, this.Count.ToInt32(), IsWindows);
-            }
-        }
 #endregion
 
 
