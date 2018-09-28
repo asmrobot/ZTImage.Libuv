@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>ZTImage.Libuv</id>
-    <version>2.1.14</version>
+    <version>2.1.15</version>
     <authors>asmrobot</authors>
     <owners>asmrobot</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
